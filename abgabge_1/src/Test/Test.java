@@ -82,7 +82,18 @@ public class Test {
 	    		System.err.println("f) Programm beenden");
 	    		System.out.println("---------------------------------------------------------------------------");
 	    		
-	    		String eingabe = sc.next();
+	    		String eingabe = null;
+	    		String eingabeCheck = sc.next();
+	    		
+	    		try {
+	    			if(eingabeCheck instanceof String){
+		                eingabe = eingabeCheck;
+		            }
+	    		} catch(Exception e) {
+	    			System.out.println("Eingabe kein Buchstabe!");
+	    			break;
+	    		}
+	    		
 	    		
 	    		switch (eingabe.toLowerCase()) {
 	    		
@@ -133,7 +144,7 @@ public class Test {
 	    			// Wenn keine reserviert sind dann soll der print nicht angezeigt werden
 	    			System.out.println("Folgende Buecher sind aktuell reserviert von Ihnen.");
 
-	    			allRes();
+	    			allRes(mitgliedNummer);
 	    			
 	    			System.out.println("---------------------------------------------------------------------------");
 
@@ -145,7 +156,7 @@ public class Test {
 	    			// Wenn keine reserviert sind dann soll der print nicht angezeigt werden
 	    			System.out.println("Folgende Buecher sind aktuell reserviert von Ihnen.");
 
-	    			allRes();
+	    			allRes(mitgliedNummer);
 	    			
 	    			System.out.println("Welches Buch wollen Sie stornieren? Geben Sie dafür die Nummer ein (1,2,3 usw.).");
 	    			int nummer = sc.nextInt();
@@ -168,10 +179,13 @@ public class Test {
 	    	                System.out.println("Reservierungsdatum: " + reservierungsdatum);
 	    	                
 	    	                reservierungLoeschen = res;
-	    	                
-	    	                counter++; 
 
-	    				} else {
+	    				} else if (counter<nummer) {
+	    					counter++;
+	    				}
+	    				
+	    				
+	    				else {
 	    					System.out.println("Keine Bücher an dieser Stelle vorhanden!");
 	    					System.out.println("---------------------------------------------------------------------------");
 	    					break;
@@ -237,22 +251,26 @@ public class Test {
 		sc.close();
 	}
 	
-	public static void allRes() {
+	public static void allRes(int nummer) {
 		int countNum = 1;
 		for (Reservierung resBenutzer : reservierungen) {
 			int resIsbn = resBenutzer.getIsbn();
 			
-			for (Buch resBuch : resBuecher) {
-				if (resBuch.getIsbn() == resIsbn) {
-					System.out.println("Nummer: "+ countNum);
-					System.out.println("Titel: " + resBuch.getTitel());
-					System.out.println("Author: " + resBuch.getAutor());
-					System.out.println("ISBN: " + resBenutzer.getIsbn());
-					System.out.println("Reserviert am: " + resBenutzer.getReservierungsdatum());
-					
-					countNum++;
+			if (resBenutzer.getMitgliedsnummer() == nummer) {
+				for (Buch resBuch : resBuecher) {
+					if (resBuch.getIsbn() == resIsbn) {
+						System.out.println("Nummer: "+ countNum);
+						System.out.println("Titel: " + resBuch.getTitel());
+						System.out.println("Author: " + resBuch.getAutor());
+						System.out.println("ISBN: " + resBenutzer.getIsbn());
+						System.out.println("Reserviert am: " + resBenutzer.getReservierungsdatum());
+						
+						countNum++;
+					}
 				}
 			}
+			
+			
 		}
 	}
 
