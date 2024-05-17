@@ -100,6 +100,50 @@ public class BuchVerwaltung {
 	        }
 	    }
 	    
+	    public void showAllBooks() {
+			for (Buch buch : buecher) {
+				if (buch.getAnzahl_vb() >= 1) {
+					String buchDetails = buch.toString();
+					System.out.println(buchDetails);
+				} else {
+					System.out.println("Aktuell nicht verfuegbar:");
+					System.out.println(buch.getTitel());
+				}
+			}
+	    }
+	    
+	    public int updateAnzahl(int id, int isbn, String buchung) {
+	    	
+			for (Buch buch : buecher) {
+				if (buch.getBuchId() == id) {
+					isbn = buch.getIsbn();
+					int anzBuecher = buch.getAnzahl_vb();
+
+		            if (buchung.equals("loeschen")) {
+		                anzBuecher = anzBuecher - 1;
+		            } else {
+		                anzBuecher = anzBuecher + 1;
+		            }
+
+					buch.setAnzahl_vb(anzBuecher);
+				}
+			}
+			
+			return isbn;
+	    }
+	    
+//		for (Buch buch : buchv.returnBuch("buecher.csv")) {
+//		if (buch.getIsbn() == isbn) {
+//			int anzBuecher = buch.getAnzahl_vb();
+//
+//			anzBuecher = anzBuecher + 1;
+//
+//			buch.setAnzahl_vb(anzBuecher);
+//		}
+//	}
+	    
+	    
+	    
 	}
 	
 	

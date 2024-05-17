@@ -1,4 +1,4 @@
-package Reservierung;
+package reservierung;
 
 
 public class Reservierung {

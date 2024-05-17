@@ -21,6 +21,9 @@ public class Buch {
 		this.genre = genre;
 		this.anzahl_vb = anzahl_vb;
 	}
+	
+	public Buch () {
+	}
 
 	public int getBuchId() {
 		return buchId;
